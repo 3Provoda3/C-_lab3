@@ -1,0 +1,59 @@
+using System;
+using System.Linq;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        char continueChoice;
+
+        do
+        {
+            // Запит на введення текстового рядка
+            Console.Write("Введіть текстовий рядок: ");
+            string inputText = Console.ReadLine();
+
+            // Завдання 21а: Виведення слова з найбільшою кількістю голосних літер
+            string wordWithMostVowels = FindWordWithMostVowels(inputText);
+            Console.WriteLine($"Слово з найбільшою кількістю голосних літер: {wordWithMostVowels}");
+
+            // Завдання 21б: Видалення всіх непотрібних пробілів
+            string cleanedText = RemoveExtraSpaces(inputText);
+            Console.WriteLine($"Текст без непотрібних пробілів: \"{cleanedText}\"");
+
+            // Запитати користувача, чи хоче він продовжити
+            Console.Write("Чи хочете ви продовжити? (y/n): ");
+            continueChoice = Convert.ToChar(Console.ReadLine().ToLower());
+
+        } while (continueChoice == 'y');
+
+        Console.WriteLine("Програма завершена.");
+    }
+
+    // Метод для знаходження слова з найбільшою кількістю голосних літер
+    static string FindWordWithMostVowels(string text)
+    {
+        string[] words = text.Split(new[] { ' ', '\t', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        string vowels = "аеєиіїоуюяАЕЄИІЇОУЮЯaeiouAEIOU";
+        string wordWithMostVowels = "";
+        int maxVowelCount = 0;
+
+        foreach (string word in words)
+        {
+            int vowelCount = word.Count(c => vowels.Contains(c));
+            if (vowelCount > maxVowelCount)
+            {
+                maxVowelCount = vowelCount;
+                wordWithMostVowels = word;
+            }
+        }
+
+        return wordWithMostVowels;
+    }
+
+    // Метод для видалення всіх непотрібних пробілів
+    static string RemoveExtraSpaces(string text)
+    {
+        return string.Join(" ", text.Split(new[] { ' ', '\t', '\n' }, StringSplitOptions.RemoveEmptyEntries));
+    }
+}
